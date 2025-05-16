@@ -1,0 +1,28 @@
+{% extends 'pizzeria/base.html' %}
+{% load static %}
+
+{% block content %}
+<section id="menu" class="py-12 bg-gray-100">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-8">Nuestro Menú</h2>
+        {% if pizzas %}
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for pizza in pizzas %}
+                    <div class="bg-white p-4 rounded-lg shadow-md">
+                        {% if pizza.image %}
+                            <img src="{{ pizza.image.url }}" alt="{{ pizza.name }}" class="w-full h-48 object-cover rounded-t-lg">
+                        {% else %}
+                            <img src="{% static 'img/pizza1.jpg' %}" alt="{{ pizza.name }}" class="w-full h-48 object-cover rounded-t-lg">
+                        {% endif %}
+                        <h3 class="text-xl font-semibold mt-2">{{ pizza.name }}</h3>
+                        <p class="text-gray-600">{{ pizza.description }}</p>
+                        <p class="text-orange-500 font-bold mt-2">${{ pizza.price }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-center text-gray-600">No hay pizzas disponibles.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

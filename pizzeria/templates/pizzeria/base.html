@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Bigote's Pizzeria{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="{% static 'js/main.js' %}" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+</head>
+<body class="bg-gray-100">
+    <!-- Navbar -->
+    <nav class="bg-gray-800 p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="{% url 'index' %}" class="text-2xl font-bold text-white">Bigote's Pizzeria</a>
+            <div class="space-x-4">
+                <a href="{% url 'index' %}" class="text-white hover:text-gray-300">Inicio</a>
+                <a href="#menu" class="text-white hover:text-gray-300">Menú</a>
+                <a href="#pizzas" class="text-white hover:text-gray-300">Pizzas</a>
+                <a href="#gallery" class="text-white hover:text-gray-300">Galería</a>
+                <a href="#contact" class="text-white hover:text-gray-300">Contacto</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'pizzas' %}" class="text-white hover:text-gray-300">Gestión de Pizzas</a>
+                    <a href="{% url 'logout' %}" class="text-white hover:text-gray-300">Cerrar Sesión</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="text-white hover:text-gray-300">Iniciar Sesión</a>
+                    <a href="{% url 'register' %}" class="text-white hover:text-gray-300">Registrarse</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Messages -->
+    {% if messages %}
+        <div class="container mx-auto mt-4">
+            {% for message in messages %}
+                <div class="bg-green-500 text-white p-4 rounded">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Content -->
+    {% block content %}
+    {% endblock %}
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white p-4 text-center mt-8">
+        <p>© 2025 Bigote's Pizzeria. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

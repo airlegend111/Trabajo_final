@@ -1,0 +1,33 @@
+{% extends 'pizzeria/base.html' %}
+{% load static %}
+
+{% block content %}
+<section id="delete-pizza" class="py-12 bg-gray-100">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-8">Eliminar Pizza: {{ pizza.name }}</h2>
+
+        <!-- Mostrar mensajes de éxito/error -->
+        {% if messages %}
+            <div class="max-w-md mx-auto mb-6">
+                {% for message in messages %}
+                    <div class="p-4 rounded-lg {% if message.tags == 'success' %}bg-green-100 text-green-700{% else %}bg-red-100 text-red-700{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <!-- Formulario de confirmación -->
+        <div class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
+            <p class="text-center text-gray-600 mb-4">¿Estás seguro de que deseas eliminar esta pizza?</p>
+            <form method="post">
+                {% csrf_token %}
+                <div class="flex justify-center space-x-4">
+                    <button type="submit" class="bg-red-500 text-white p-3 rounded-lg hover:bg-red-600 transition-colors font-semibold">Eliminar</button>
+                    <a href="{% url 'pizzas' %}" class="bg-gray-500 text-white p-3 rounded-lg hover:bg-gray-600 transition-colors font-semibold">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

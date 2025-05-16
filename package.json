@@ -1,0 +1,14 @@
+{
+    "name": "bigotes-pizzeria",
+    "version": "1.0.0",
+    "description": "Ported Bigote's Pizzeria to Django",
+    "scripts": {
+      "build:css": "npx tailwindcss -i ./pizzeria/static/css/input.css -o ./pizzeria/static/css/styles.css",
+      "watch:css": "npx tailwindcss -i ./pizzeria/static/css/input.css -o ./pizzeria/static/css/styles.css --watch"
+    },
+    "devDependencies": {
+      "flowbite": "^2.2.1",
+      "postcss": "^8.4.31",
+      "tailwindcss": "^3.3.3"
+    }
+  }

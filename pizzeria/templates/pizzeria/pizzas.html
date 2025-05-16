@@ -1,0 +1,48 @@
+{% extends 'pizzeria/base.html' %}
+{% load static %}
+
+{% block content %}
+<section id="pizzas" class="py-12 bg-gray-100">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-8">Gestión de Pizzas (Protegido)</h2>
+
+        <!-- Botón para crear una nueva pizza -->
+        <div class="text-center mb-6">
+            <a href="{% url 'create_pizza' %}" class="bg-green-500 text-white p-3 rounded-lg hover:bg-green-600 transition-colors font-semibold">Añadir Nueva Pizza</a>
+        </div>
+
+        <!-- Barra de búsqueda -->
+        <div class="mb-6 max-w-md mx-auto">
+            <form method="get" class="flex items-center">
+                <input type="text" name="q" value="{{ query }}" placeholder="Buscar pizzas por nombre..." class="w-full p-2 border rounded-l-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
+                <button type="submit" class="bg-orange-500 text-white p-2 rounded-r-lg hover:bg-orange-600" style="background-color: #f97316; color: #ffffff;">Buscar</button>
+            </form>
+        </div>
+
+        <!-- Lista de pizzas -->
+        {% if pizzas %}
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for pizza in pizzas %}
+                    <div class="bg-white p-4 rounded-lg shadow-md">
+                        {% if pizza.image %}
+                            <img src="{{ pizza.image.url }}" alt="{{ pizza.name }}" class="w-full h-48 object-cover rounded-t-lg">
+                        {% else %}
+                            <img src="{% static 'img/pizza1.jpg' %}" alt="{{ pizza.name }}" class="w-full h-48 object-cover rounded-t-lg">
+                        {% endif %}
+                        <h3 class="text-xl font-semibold mt-2">{{ pizza.name }}</h3>
+                        <p class="text-gray-600">{{ pizza.description }}</p>
+                        <p class="text-orange-500 font-bold mt-2">${{ pizza.price }}</p>
+                        <!-- Botones para editar y eliminar -->
+                        <div class="mt-4 flex justify-between">
+                            <a href="{% url 'update_pizza' pizza.pk %}" class="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition-colors">Editar</a>
+                            <a href="{% url 'delete_pizza' pizza.pk %}" class="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600 transition-colors">Eliminar</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-center text-gray-600">No se encontraron pizzas.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

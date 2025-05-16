@@ -1,0 +1,73 @@
+{% extends 'pizzeria/base.html' %}
+{% load static %}
+
+{% block title %}Bigote's Pizzeria{% endblock %}
+
+{% block content %}
+    <!-- Hero Section -->
+    <header class="bg-cover bg-center h-96 flex items-center justify-center" style="background-image: url('{% static "img/hero.webp" %}')">
+        <h1 class="text-4xl md:text-5xl font-bold text-white text-center">Bienvenido a Bigote's Pizzeria</h1>
+    </header>
+
+    <!-- Menú Section -->
+    <section id="menu" class="py-12">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-8">Nuestro Menú</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {% for pizza in pizzas %}
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        {% if pizza.image %}
+                            <img src="{{ pizza.image.url }}" alt="{{ pizza.name }}" class="w-full h-48 object-cover rounded">
+                        {% else %}
+                            <img src="{% static 'img/pizza1.webp' %}" alt="Placeholder" class="w-full h-48 object-cover rounded">
+                        {% endif %}
+                        <h3 class="text-xl font-bold mt-2">{{ pizza.name }}</h3>
+                        <p class="text-gray-600">{{ pizza.description }}</p>
+                        <p class="text-lg font-semibold mt-2">${{ pizza.price }}</p>
+                    </div>
+                {% empty %}
+                    <p class="text-center col-span-3">No hay pizzas disponibles.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Galería Section -->
+    <section id="gallery" class="py-12 bg-gray-200">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-8">Galería</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <img src="{% static 'img/pizza1.webp' %}" alt="Pizza 1" class="w-full h-48 object-cover rounded">
+                <img src="{% static 'img/pizza2.webp' %}" alt="Pizza 2" class="w-full h-48 object-cover rounded">
+                <img src="{% static 'img/pizza3.webp' %}" alt="Pizza 3" class="w-full h-48 object-cover rounded">
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto Section -->
+    <section id="contact" class="py-12">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-8">Contáctanos</h2>
+            <form method="post" class="max-w-lg mx-auto">
+                {% csrf_token %}
+                <div class="mb-4">
+                    <label for="name" class="block text-gray-700">Nombre</label>
+                    <input type="text" name="name" id="name" required class="w-full border p-2 rounded">
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="block text-gray-700">Correo</label>
+                    <input type="email" name="email" id="email" required class="w-full border p-2 rounded">
+                </div>
+                <div class="mb-4">
+                    <label for="message" class="block text-gray-700">Mensaje</label>
+                    <textarea name="message" id="message" required class="w-full border p-2 rounded"></textarea>
+                </div>
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Enviar</button>
+            </form>
+        </div>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+{% endblock %}
