@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bigotes Pizzería Artesanal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            background-color: #1a2a44;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+        .navbar {
+            background-color: #2c3e50;
+            padding: 1rem;
+        }
+        .navbar-brand, .nav-link {
+            color: #fff !important;
+        }
+        .navbar-brand img {
+            height: 30px;
+            margin-right: 10px;
+        }
+        .header-section {
+            position: relative;
+            height: 100vh;
+            background: url('static/images/header-pizza.jpg') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+        }
+        .header-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        .btn-custom {
+            background-color: #f39c12;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            transition: all 0.3s;
+        }
+        .btn-custom:hover {
+            background-color: #e08e0b;
+            color: #fff;
+        }
+        .section {
+            padding: 60px 0;
+            text-align: center;
+        }
+        .section h2 {
+            margin-bottom: 30px;
+        }
+        .gallery-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .video-section {
+            position: relative;
+            height: 400px;
+            background: url('static/images/video-bg.jpg') no-repeat center center/cover;
+        }
+        .video-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        .video-overlay {
+            position: relative;
+            z-index: 1;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .form-control {
+            background-color: #34495e;
+            border: none;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+        .form-control::placeholder {
+            color: #bdc3c7;
+        }
+        .map-container {
+            height: 400px;
+            margin-top: 20px;
+        }
+        @media (max-width: 768px) {
+            .header-section {
+                height: 70vh;
+            }
+            .video-section, .map-container {
+                height: 300px;
+            }
+            .contact-form {
+                padding: 0 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="static/images/logo.png" alt="Bigotes Logo"> Bigotes
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#inicio">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#menu">Menú</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#nosotros">Nosotros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contacto">Contacto</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <button class="btn btn-outline-light me-2">Modo Oscuro</button>
+                    <a href="#" class="text-white me-2"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-white me-2"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-white"><i class="fas fa-shopping-cart"></i></a>
+                    <a href="#" class="text-white ms-2"><i class="fas fa-user"></i></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section id="inicio" class="header-section">
+        <div class="header-content">
+            <h1>Bigotes Pizzería Artesanal Alemania</h1>
+            <p>Descubre el auténtico sabor de la pizza artesanal con un toque alemán</p>
+            <a href="#menu" class="btn btn-custom">Ver Menú</a>
+        </div>
+    </section>
+
+    <!-- Quiénes Somos -->
+    <section id="nosotros" class="section">
+        <h2>Quiénes Somos</h2>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <img src="static/images/quienes-somos.jpg" alt="Quiénes Somos" class="img-fluid rounded">
+                </div>
+                <div class="col-md-6">
+                    <p>Bigotes nació de la pasión por la pizza artesanal y la tradición alemana. Nuestro chef, con más de 20 años de experiencia, combina técnicas tradicionales con ingredientes frescos y de alta calidad para crear pizzas únicas que no encontrarás en ningún otro lugar. En nuestro acogedor restaurante, cada pizza es preparada con dedicación y horneada en nuestro horno artesanal, garantizando ese sabor auténtico que nos caracteriza.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nuestra Galería -->
+    <section id="galeria" class="section">
+        <h2>Nuestra Galería</h2>
+        <div class="container">
+            <img src="static/images/galeria.jpg" alt="Galería" class="gallery-img">
+        </div>
+    </section>
+
+    <!-- Descubre el Arte de Nuestra Pizza -->
+    <section id="arte" class="section video-section">
+        <div class="video-overlay">
+            <h2>Descubre el Arte de Nuestra Pizza</h2>
+            <a href="https://www.youtube.com/watch?v=example" class="btn btn-custom">Mirar en YouTube</a>
+        </div>
+    </section>
+
+    <!-- Contacto -->
+    <section id="contacto" class="section">
+        <h2>Contacto</h2>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>Información</h3>
+                    <p><strong>Dirección:</strong> Calle Principal #123, Ciudad, País</p>
+                    <p><strong>Teléfono:</strong> (123) 456-7890</p>
+                    <p><strong>Email:</strong> info@bigotespizzeria.com</p>
+                    <p><strong>Horario:</strong> Lunes a Domingo 12:00 PM - 10:00 PM</p>
+                </div>
+                <div class="col-md-6">
+                    <h3>Envíanos un mensaje</h3>
+                    <form>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" placeholder="Nombre" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="email" class="form-control" placeholder="Email" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" placeholder="Asunto" required>
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control" rows="4" placeholder="Mensaje" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-custom">Enviar</button>
+                    </form>
+                    <div class="map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.564789101974!2d-74.0689409855668!3d4.611000796576769!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9bfd5e8c1d9d%3A0x6a3c1b7f5a6b7f7f!2sBogota%2C%20Colombia!5e0!3m2!1sen!2sus!4v1623456789!5m2!1sen!2sus" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
