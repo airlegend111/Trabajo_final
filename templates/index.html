@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LandingPage</title>
+    {% load static %}
+    <link rel="shortcut icon" href="{% static 'Imgs/logos/iconweb.svg' %}" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <nav class="navigation">
+            <div class="wrap-nav">
+                <div class="social-list">
+                    <a class="logowpp" target="_blank" href="https://wa.me/573246281456"><img src="{% static 'Imgs/logos/wpp-03.svg' %}" alt="WhatsApp"></a>
+                    <a class="fb" target="_blank" href="https://www.facebook.com/profile.php?id=100089531658354"><img src="{% static 'Imgs/logos/facebook-04.svg' %}" alt="Facebook"></a>
+                    <a class="ig" target="_blank" href="https://www.instagram.com/transportservice_medellin/"><img src="{% static 'Imgs/logos/instagram-01.svg' %}" alt="Instagram"></a>
+                </div>
+                <a><img class="logo" src="{% static 'Imgs/logos/logotipo_web.svg' %}" alt="Logotipo Transport Service Medellin"></a>
+                <div class="list-nav">
+                    <a class="list" href="{% url 'index' %}">Home</a>
+                    <a class="list" href="#about-us">About us</a>
+                    <a class="list" target="_blank" href="https://drive.google.com/file/d/1MZFcI5pwCUe6oWQOEQRYkOdcMfsOj6dU/view?usp=sharing">Brochure</a>
+                    <a href="{% url 'login' %}" class="btn">Iniciar sesión</a>
+                    <a class="register_btn" href="{% url 'register' %}">Registrarse</a>
+                </div>
+                <button class="abrir visible"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+                  </svg></button>
+                  
+                  <button class="cerrar">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-x-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8 7.293z"/>
+                      </svg>
+                  </button>
+            </div>
+        </nav>
+    </header>
+    <a class="logowps" target="_blank" href="https://wa.me/573246281456"><img src="{% static 'Imgs/logos/wpp-03.svg' %}" alt="WhatsApp"></a>
+    
+    <div class="container-one">
+        <div id="carouselExample" class="carousel carousel-fade" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1"
+                    aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2"
+                    aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="3"
+                    aria-label="Slide 4"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="{% static 'Imgs/photos/carrusel_1-min.jpg' %}" class="d-block w-100"
+                        style="object-fit: cover;" alt="Imagen 1">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5 style="font-size: 2rem;">Explora lugares increíbles</h5>
+                        <p style="font-size: 1.2rem;">Descubre destinos inolvidables en cada viaje.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'Imgs/photos/carrusel_2-min.jpg' %}" class="d-block w-100"
+                        style=" object-fit: cover;" alt="Imagen 2">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5 style="font-size: 2rem;">Vive la aventura</h5>
+                        <p style="font-size: 1.2rem;">Encuentra experiencias únicas en cada rincón.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'Imgs/photos/carrusel_3-min.jpg' %}" class="d-block w-100"
+                        style="object-fit: cover;" alt="Imagen 3">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5 style="font-size: 2rem;">Descubre nuevos horizontes</h5>
+                        <p style="font-size: 1.2rem;">Viajar es la mejor manera de aprender y crecer.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'Imgs/photos/carrusel_4-min.jpg' %}" class="d-block w-100"
+                        style="object-fit: cover;" alt="Imagen 4">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5 style="font-size: 2rem;">Conéctate con la naturaleza</h5>
+                        <p style="font-size: 1.2rem;">Los paisajes más hermosos te esperan.</p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true" style="width: 50px; height: 50px;"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true" style="width: 50px; height: 50px;"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+    <div class="container-two">
+        <div class="embebed">
+            <iframe 
+            src="https://www.youtube.com/embed/SkVafeiiUMI?autoplay=1&mute=1&controls=1&modestbranding=1&showinfo=0&rel=0"  
+            title="YouTube Short" 
+            frameborder="0" 
+            allow=" autoplay; encrypted-media;" 
+            allowfullscreen>
+            </iframe>
+        </div>
+    </div>
+    
+    <div class="aboutus" style="background-size: cover;background-position: center;background-repeat: no-repeat; background-image: linear-gradient(to bottom, rgba(18, 18, 18, 1), rgba(18, 18, 18, 0.7)), url('')" id="about-us">
+        <h2>About Us</h2>
+        <p>
+            En TransportService Medellín, nos especializamos en ofrecer soluciones de transporte seguras, eficientes y confiables en toda el área metropolitana de Medellín. Con años de experiencia en el sector, nos hemos consolidado como una empresa líder en movilidad, comprometida con la puntualidad, la comodidad y la satisfacción de nuestros clientes.
+
+            Nuestro equipo de conductores profesionales y nuestra moderna flota de vehículos garantizan un servicio de alta calidad, adaptado a las necesidades de cada cliente. Ya sea para transporte empresarial, turístico o personal, en TransportService Medellín trabajamos con los más altos estándares de seguridad y servicio al cliente.
+
+            Confía en nosotros para llegar a tu destino de manera rápida y segura. Tu movilidad, nuestra prioridad.
+        </p>
+    </div>
+    
+    <div class="container gallery">
+        <h2>Photos Gallery</h2>
+        <div class="container-three row">
+            <div class="col-lg-4">
+                <img src="{% static 'Imgs/photos/photo_20_2025-02-09_15-48-37.jpg' %}" alt="">
+            </div>
+            <div class="col-lg-4">
+                <img src="{% static 'Imgs/photos/photo_10_2025-02-09_15-48-37.jpg' %}" alt="">
+            </div>
+            <div class="col-lg-4">
+                <img src="{% static 'Imgs/photos/photo_15_2025-02-09_15-48-37.jpg' %}" alt="">
+            </div>
+            <div class="col-lg-4">
+                <img src="{% static 'Imgs/photos/photo_29_2025-02-09_15-48-37.jpg' %}" alt="">
+            </div>
+            <div class="col-lg-4">
+                <img src="{% static 'Imgs/photos/photo_20_2025-02-09_15-48-37.jpg' %}" alt="">
+            </div>
+            <div class="col-lg-4">
+                <img src="{% static 'Imgs/photos/photo_10_2025-02-09_15-48-37.jpg' %}" alt="">
+            </div>
+            <div class="col-lg-4">
+                <img src="{% static 'Imgs/photos/photo_15_2025-02-09_15-48-37.jpg' %}" alt="">
+            </div>
+            <div class="col-lg-4">
+                <img src="{% static 'Imgs/photos/photo_29_2025-02-09_15-48-37.jpg' %}" alt="">
+            </div>
+            <div class="col-lg-4">
+                <img src="{% static 'Imgs/photos/photo_30_2025-02-09_15-48-37.jpg' %}" alt="">
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <img src="{% static 'Imgs/logos/iconweb.svg' %}" alt="Transport Service Medellin Logo" class="footer-logo">
+            </div>
+            <div class="footer-column">
+                <h3>Contacto</h3>
+                <div class="contact-info">
+                    <p><span class="icon">📱</span> +57 324 6281456</p>
+                    <p><span class="icon">📧</span> transportservicemedellin@gmail.com</p>
+                    <p><span class="icon">📍</span> Medellín, Colombia</p>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Redes sociales</h3>
+                <div class="social-links">
+                    <p><span class="icon">👤</span> @transportservice_med</p>
+                    <p><span class="icon">📸</span> @transportservice_medellin</p>
+                    <p><span class="icon">🎵</span> @transportservice_med</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="footer-bottom">
+        <p>Made by <a href="#" class="Autores"> Julian Fernandez - Juan Felipe Joaqui - Santiago Maya</a></p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <script type="module" src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
