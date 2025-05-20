@@ -18,3 +18,21 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+class Pizza(models.Model):
+    """
+    Model representing a pizza in the catalog.
+    """
+    name = models.CharField(max_length=255, verbose_name="Nombre")
+    description = models.TextField(verbose_name="Descripción")
+    size = models.CharField(max_length=50, verbose_name="Tamaño")
+    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Precio")
+    image = models.ImageField(upload_to='pizzas/', blank=True, null=True, verbose_name="Imagen")
+
+    class Meta:
+        verbose_name = "Pizza"
+        verbose_name_plural = "Pizzas"
+        ordering = ['name']
+
+    def __str__(self):
+        return f"{self.name} - {self.size}"
