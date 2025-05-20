@@ -1,11 +1,19 @@
+/* Global Styles */
+body {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
 /* Navbar Styles */
 .navbar {
     background-color: rgba(255, 255, 255, 0.95);
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    padding: 1rem 0;
-    position: fixed;
+    padding: 0.5rem 0;
     width: 100%;
-    top: 0;
     z-index: 1000;
 }
 
@@ -13,6 +21,13 @@
     font-weight: bold;
     font-size: 1.5rem;
     color: #d97706;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand i {
+    font-size: 1.75rem;
+    margin-right: 0.5rem;
 }
 
 .nav-link {
@@ -25,13 +40,27 @@
     color: #d97706;
 }
 
+.btn-outline-warning {
+    border: 2px solid #ffc107;
+    color: #ffc107;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-warning:hover {
+    background-color: #ffc107;
+    color: #000;
+    transform: translateY(-2px);
+}
+
 /* Hero Section */
 .hero-section {
     position: relative;
-    height: calc(100vh - 76px);
+    height: 100vh;  /* Changed from calc(100vh - 76px) to full viewport height */
     background-size: cover;
     background-position: center;
-    margin-top: 76px;
+    margin-top: 0;  /* Removed margin-top to allow full height */
     background-attachment: fixed;
     display: flex;
     align-items: center;
@@ -49,9 +78,10 @@
     position: relative;
     max-width: 800px;
     margin: 0 auto;
-    padding: 100px 20px;
+    padding: 150px 20px;  /* Increased padding for better vertical spacing */
     color: white;
     text-align: center;
+    z-index: 1;  /* Ensure content stays above overlay */
 }
 
 /* Gallery Section */
@@ -134,9 +164,107 @@
     transform: translateY(-2px);
 }
 
+/* Login Styles */
+.login-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('https://cdn.pixabay.com/photo/2017/12/10/14/47/pizza-3010062_1280.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+    overflow: hidden;
+}
+
+.login-box {
+    background-color: #1f2937;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-box h1 {
+    color: #ffffff;
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.login-box .form-label {
+    color: #ffffff;
+    opacity: 0.8;
+}
+
+.login-box .form-control {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.login-box .form-control:focus {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: #ffc107;
+    box-shadow: none;
+}
+
+.login-box .btn-warning {
+    padding: 0.75rem;
+    font-weight: 600;
+}
+
+.login-box a {
+    color: #ffc107;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.login-box a:hover {
+    color: #ffca2c;
+}
+
 /* Footer Styles */
 footer {
-    padding: 4rem 0 2rem;
+    background-color: #1f2937;
+    padding: 1rem 0;
+    margin: 0;
+}
+
+footer h6 {
+    color: #ffc107;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+}
+
+footer p {
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+footer .d-block {
+    margin-bottom: 0.25rem;
+}
+
+footer hr {
+    border-color: rgba(255, 255, 255, 0.1);
+    margin: 2rem 0;
+}
+
+footer a {
+    color: #ffc107;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+footer a:hover {
+    color: #ffca2c;
+    text-decoration: none;
 }
 
 footer h5 {
