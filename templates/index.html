@@ -7,63 +7,209 @@
     <title>Bigotes Pizzería Artesanal Alemania</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <img src="{% static 'images/logo.png' %}" alt="Bigotes Logo"> Bigotes
-            </a>
-            <div class="navbar-nav">
-                <a class="nav-link" href="#inicio">Inicio</a>
-                <a class="nav-link" href="#menu">Menú</a>
-                <a class="nav-link" href="#nosotros">Nosotros</a>
-                <a class="nav-link" href="#contacto">Contacto</a>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#"><img src="{% static 'images/logo.png' %}" alt="Bigotes Logo" height="40"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#inicio">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#menu">Menú</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#nosotros">Nosotros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contacto">Contacto</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
 
-    <!-- Header Section -->
-    <section id="inicio" class="header-section">
-        <h1>Bigotes Pizzería Artesanal Alemania</h1>
-        <p>Descubre el auténtico sabor de la pizza artesanal con un toque alemán</p>
-        <a href="#menu" class="btn-custom">Ver Menú</a>
+    <!-- Hero Section -->
+    <section class="hero-section" style="background-image: url('https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&q=80')">
+        <div class="overlay"></div>
+        <div class="hero-content">
+            <h1>Bigotes Pizzería Artesanal Alemana</h1>
+            <p>Descubre el auténtico sabor de la pizza artesanal con un toque alemán</p>
+            <a href="#menu" class="btn btn-lg btn-warning">Ver Menú</a>
+        </div>
     </section>
 
-    <!-- Quiénes Somos -->
-    <section id="nosotros" class="section">
-        <h2>Quiénes Somos</h2>
-        <p>Bigotes nació de la pasión por la pizza artesanal y la tradición alemana. Nuestro chef, con más de 20 años de experiencia, combina técnicas tradicionales con ingredientes frescos y de alta calidad para crear pizzas únicas que no encontrarás en ningún otro lugar. En nuestro acogedor restaurante, cada pizza es preparada con dedicación y horneada en nuestro horno artesanal, garantizando ese sabor auténtico que nos caracteriza.</p>
-    </section>
-
-    <!-- Contacto -->
-    <section id="contacto" class="section">
-        <h2>Contacto</h2>
+    <!-- About Section -->
+    <section id="nosotros" class="section bg-light">
         <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <h3>Información</h3>
-                    <p><strong>Dirección:</strong> Calle Principal #123, Ciudad, País</p>
-                    <p><strong>Teléfono:</strong> (123) 456-7890</p>
-                    <p><strong>Email:</strong> info@bigotespizzeria.com</p>
-                    <p><strong>Horario:</strong> Lunes a Domingo 12:00 PM - 10:00 PM</p>
+            <h2 class="section-title">Quiénes Somos</h2>
+            <div class="row align-items-center">                <div class="col-md-6">
+                    <img src="https://images.unsplash.com/photo-1542834369-f10ebf06d3e0?auto=format&fit=crop&q=80" alt="Restaurant" class="img-fluid rounded shadow">
                 </div>
                 <div class="col-md-6">
-                    <h3>Envíanos un mensaje</h3>
-                    <form>
-                        <input type="text" class="form-control" placeholder="Nombre" required>
-                        <input type="email" class="form-control" placeholder="Email" required>
-                        <input type="text" class="form-control" placeholder="Asunto" required>
-                        <textarea class="form-control" rows="4" placeholder="Mensaje" required></textarea>
-                        <button type="submit" class="btn-submit">Enviar</button>
+                    <p class="about-text">
+                        Bigotes nació de la pasión por la pizza artesanal y la tradición alemana. 
+                        Nuestro chef, con más de 20 años de experiencia, combina técnicas tradicionales 
+                        con ingredientes frescos y de alta calidad para crear pizzas únicas que no 
+                        encontrarás en ningún otro lugar.
+                    </p>
+                    <p class="about-text">
+                        En nuestro acogedor restaurante, cada pizza es preparada con dedicación y 
+                        horneada en nuestro horno artesanal, garantizando ese sabor auténtico que 
+                        nos caracteriza.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>    <!-- Gallery Section -->
+    <section class="section bg-light">
+        <div class="container">
+            <h2 class="section-title">Nuestra Galería</h2>
+            <div class="gallery-slider">
+                <div><img src="https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&q=80" alt="Galería 1"></div>
+                <div><img src="https://images.unsplash.com/photo-1566843972142-a7fcb70de55a?auto=format&fit=crop&q=80" alt="Galería 2"></div>
+                <div><img src="https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?auto=format&fit=crop&q=80" alt="Galería 3"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Descubre el Arte de Nuestra Pizza</h2>
+            <div class="video-container">
+                <iframe
+                    src="https://www.youtube.com/embed/9GqLfxhf8W4"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </section>    <!-- Contact Section -->
+    <section id="contacto" class="section bg-dark text-white">
+        <div class="container">
+            <h2 class="section-title text-white">Contacto</h2>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <h3 class="mb-4">Información</h3>
+                    <p>
+                        <strong>Dirección:</strong><br>
+                        Calle Principal #123<br>
+                        Ciudad, País
+                    </p>
+                    <p>
+                        <strong>Teléfono:</strong><br>
+                        (123) 456-7890
+                    </p>
+                    <p>
+                        <strong>Email:</strong><br>
+                        info@bigotespizzeria.com
+                    </p>
+                    <p>
+                        <strong>Horario:</strong><br>
+                        Lunes a Domingo<br>
+                        12:00 PM - 10:00 PM
+                    </p>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <h3 class="mb-4">Envíanos un mensaje</h3>                    <form>
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label text-white">Nombre</label>
+                            <input type="text" id="nombre" name="nombre" class="form-control bg-dark text-white" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label text-white">Email</label>
+                            <input type="email" id="email" name="email" class="form-control bg-dark text-white" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="asunto" class="form-label text-white">Asunto</label>
+                            <input type="text" id="asunto" name="asunto" class="form-control bg-dark text-white" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="mensaje" class="form-label text-white">Mensaje</label>
+                            <textarea id="mensaje" name="mensaje" class="form-control bg-dark text-white" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-warning w-100">Enviar</button>
                     </form>
+                </div>
+            </div>
+            
+            <!-- Map -->
+            <div class="mt-5">
+                <h3 class="text-center mb-4">Nuestra ubicación</h3>
+                <div class="map-container">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.8100753999007!2d-74.07210000000001!3d4.6097!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9a2e545a44a1%3A0x4b15425f1d81e6e3!2sBigotes%20Pizzer%C3%ADa%20Artesanal%20Alemana!5e0!3m2!1ses!2sco!4v1621436425051!5m2!1ses!2sco"
+                        width="100%" 
+                        height="400"
+                        style="border:0;" 
+                        allowfullscreen 
+                        loading="lazy">
+                    </iframe>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Bigotes Pizzería</h5>
+                    <p>Auténtica pizza artesanal con un toque alemán</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Enlaces Rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#inicio" class="text-white">Inicio</a></li>
+                        <li><a href="#menu" class="text-white">Menú</a></li>
+                        <li><a href="#nosotros" class="text-white">Nosotros</a></li>
+                        <li><a href="#contacto" class="text-white">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Síguenos</h5>
+                    <div class="social-links">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-4">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2025 Bigotes Pizzería. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.gallery-slider').slick({
+                dots: true,
+                infinite: true,
+                speed: 500,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 3000,
+            });
+        });
+    </script>
 </body>
 </html>
