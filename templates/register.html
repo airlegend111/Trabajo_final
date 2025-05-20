@@ -43,8 +43,9 @@
     <section class="login-section">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <div class="login-box">                        <h1 class="text-center mb-4">Hola Mundo</h1>
+                <div class="col-md-6">                    <div class="login-box">
+                        <h1 class="text-center mb-4">Bienvenidos</h1>
+                        <form action="/register/" method="post" id="registerForm" onsubmit="return validateForm()">
                             {% csrf_token %}
                             <div class="mb-3">
                                 <label for="nombre" class="form-label">Nombre Completo</label>
@@ -57,24 +58,23 @@
                             <div class="mb-3">
                                 <label for="email" class="form-label">Correo Electrónico</label>
                                 <input type="email" class="form-control" id="email" name="email" required>
-                            </div>
-                            <div class="mb-3">
+                            </div>                            <div class="mb-3">
                                 <label for="cedula" class="form-label">Cédula</label>
-                                <input type="text" class="form-control" id="cedula" name="cedula" pattern="[0-9]+" required>
-                                <small class="form-text text-muted">Solo números, sin guiones ni espacios</small>
+                                <input type="text" class="form-control" id="cedula" name="cedula" pattern="[0-9]{10}" maxlength="10" required>
+                                <small class="form-text text-warning" id="cedula-mensaje"></small>
                             </div>
                             <div class="mb-3">
                                 <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
                                 <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" required>
                                 <small class="form-text text-warning" id="edad-mensaje"></small>
-                            </div>
-                            <div class="mb-3">
+                            </div>                            <div class="mb-3">
                                 <label for="password" class="form-label">Contraseña</label>
                                 <input type="password" class="form-control" id="password" name="password" required>
                             </div>
                             <div class="mb-4">
                                 <label for="confirm_password" class="form-label">Confirmar Contraseña</label>
                                 <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                                <small class="form-text text-warning" id="password-mensaje"></small>
                             </div>
                             <button type="submit" class="btn btn-warning w-100 mb-3">Registrarse</button>
                             <div class="text-center">
@@ -116,13 +116,37 @@
                 <p class="mb-0">&copy; 2025 Bigotes Pizzería. Todos los derechos reservados.</p>
             </div>
         </div>
-    </footer>
+    </footer>    <!-- Modal de Registro Exitoso -->
+    <div class="modal fade" id="registroExitosoModal" tabindex="-1" aria-labelledby="registroExitosoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="registroExitosoModalLabel">¡Registro Exitoso!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Registro de cuenta satisfactorio</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" onclick="window.location.href='/login'">Ir a Iniciar Sesión</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        function validateForm() {
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script><script>        function validateForm() {
+            // Validación de cédula
+            const cedula = document.getElementById('cedula').value;
+            const mensajeCedula = document.getElementById('cedula-mensaje');
+            
+            if (cedula.length !== 10) {
+                mensajeCedula.textContent = 'La cédula debe tener exactamente 10 dígitos';
+                mensajeCedula.style.color = '#dc3545';
+                return false;
+            }
+
             // Validación de edad
             const fechaNacimiento = new Date(document.getElementById('fecha_nacimiento').value);
             const hoy = new Date();
@@ -141,14 +165,57 @@
             // Validación de contraseñas
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirm_password').value;
+            const mensajePassword = document.getElementById('password-mensaje');
 
             if (password !== confirmPassword) {
-                alert('Las contraseñas no coinciden');
+                mensajePassword.textContent = 'Las contraseñas no coinciden';
+                mensajePassword.style.color = '#dc3545';
                 return false;
             }
 
-            return true;
+            // Si todas las validaciones son exitosas, mostrar el modal
+            const modal = new bootstrap.Modal(document.getElementById('registroExitosoModal'));
+            modal.show();
+            
+            // Retrasar el envío del formulario para que se vea el modal
+            setTimeout(function() {
+                document.getElementById('registerForm').submit();
+            }, 2000);
+            
+            return false;
         }
+
+        // Validación en tiempo real de contraseñas
+        document.getElementById('confirm_password').addEventListener('input', function() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = this.value;
+            const mensajePassword = document.getElementById('password-mensaje');
+
+            if (password !== confirmPassword) {
+                mensajePassword.textContent = 'Las contraseñas no coinciden';
+                mensajePassword.style.color = '#dc3545';
+            } else {
+                mensajePassword.textContent = 'Las contraseñas coinciden';
+                mensajePassword.style.color = '#28a745';
+            }
+        });        // Validación en tiempo real de la cédula
+        document.getElementById('cedula').addEventListener('input', function() {
+            const cedula = this.value;
+            const mensajeCedula = document.getElementById('cedula-mensaje');
+            
+            if (cedula.length === 0) {
+                mensajeCedula.textContent = '';
+            } else if (cedula.length < 10) {
+                mensajeCedula.textContent = 'La cédula debe tener 10 dígitos (faltan ' + (10 - cedula.length) + ')';
+                mensajeCedula.style.color = '#dc3545';
+            } else if (cedula.length > 10) {
+                mensajeCedula.textContent = 'La cédula debe tener exactamente 10 dígitos';
+                mensajeCedula.style.color = '#dc3545';
+            } else {
+                mensajeCedula.textContent = 'Cédula válida';
+                mensajeCedula.style.color = '#28a745';
+            }
+        });
 
         // Validación en tiempo real de la edad
         document.getElementById('fecha_nacimiento').addEventListener('change', function() {
