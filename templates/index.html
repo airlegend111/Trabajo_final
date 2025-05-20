@@ -8,8 +8,34 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>    <link rel="stylesheet" href="{% static 'css/styles.css' %}">    <!-- LogRocket -->
+    <script>
+        window.USER_DATA = {
+            id: '{{ request.user.id|default:"" }}',
+            name: '{{ request.user.username|default:"" }}',
+            email: '{{ request.user.email|default:"" }}'
+        };
+    </script>    <script src="https://cdn.lgrckt-in.com/LogRocket.min.js" crossorigin="anonymous"></script>
+    <script>
+        window.LogRocket && window.LogRocket.init('1dtbnm/trabajo_final');
+        
+        {% if user.is_authenticated %}
+        /* Identificar usuario autenticado */
+        LogRocket.identify('{{ user.id }}', {
+            name: '{{ user.username }}',
+            email: '{{ user.email }}',
+            subscriptionType: '{% if user.is_staff %}admin{% else %}user{% endif %}',
+            createdAt: '{{ user.date_joined|date:"c" }}',
+            lastLogin: '{{ user.last_login|date:"c" }}'
+        });
+        {% else %}
+        /* Identificar usuario anónimo */
+        LogRocket.identify('anonymous-' + Date.now(), {
+            name: 'Anonymous User',
+            type: 'anonymous'
+        });
+        {% endif %}
+    </script>
 </head>
 <body>
     <!-- Navbar -->
@@ -155,7 +181,32 @@
                         <button type="submit" class="btn btn-warning w-100">Enviar</button>
                     </form>
                 </div>
+            </div>              <!-- Comentarios Section -->
+            <div class="mt-5">
+                <h3 class="text-center mb-4">Comentarios</h3>
+                <div class="comments-section">
+                    {% if user.is_authenticated %}
+                    <div class="comment-form mb-4">
+                        <form id="commentForm" class="mb-4">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="comment" class="form-label text-white">Deja tu comentario</label>
+                                <textarea id="comment" name="content" class="form-control bg-dark text-white" rows="3" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-warning">Publicar Comentario</button>
+                        </form>
+                    </div>
+                    {% else %}
+                    <div class="text-center mb-4">
+                        <p>Para dejar un comentario, necesitas <a href="{% url 'login' %}" class="text-warning">iniciar sesión</a></p>
+                    </div>
+                    {% endif %}
+                    <div id="commentsList" class="comments-list">
+                        <!-- Los comentarios se cargarán aquí dinámicamente -->
+                    </div>
+                </div>
             </div>
+
               <!-- Map -->
             <div class="mt-5">
                 <h3 class="text-center mb-4">Nuestra ubicación</h3>
@@ -210,8 +261,7 @@
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-    <script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>    <script>
         $(document).ready(function(){
             $('.gallery-slider').slick({
                 dots: true,
@@ -222,6 +272,72 @@
                 autoplay: true,
                 autoplaySpeed: 3000,
             });
+        });
+
+        // Funcionalidad de comentarios
+        function loadComments() {
+            fetch('/users/get-comments/')
+                .then(response => response.json())
+                .then(data => {
+                    const commentsHtml = data.comments.map(comment => `
+                        <div class="comment bg-dark p-3 mb-3 rounded">
+                            <div class="d-flex justify-content-between">
+                                <strong class="text-warning">${comment.user}</strong>
+                                <small class="text-muted">${comment.date}</small>
+                            </div>
+                            <p class="mt-2 mb-0 text-white">${comment.content}</p>
+                        </div>
+                    `).join('');
+                    document.getElementById('commentsList').innerHTML = commentsHtml;
+                });
+        }
+
+        // Cargar comentarios al iniciar
+        loadComments();
+
+        // Manejar el envío de comentarios
+        const commentForm = document.getElementById('commentForm');
+        if (commentForm) {
+            commentForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+                fetch('/users/add-comment/', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    }
+                })
+                .then(response => response.json())                .then(data => {
+                    if (data.status === 'success') {
+                        loadComments();
+                        commentForm.reset();
+                          /* Registrar evento en LogRocket */
+                        if (window.LogRocket) {
+                            LogRocket.track('Comment Added', {
+                                userId: data.logrocket_data.user_id,
+                                commentId: data.logrocket_data.comment_id,
+                                contentLength: data.logrocket_data.content_length
+                            });
+                        }
+                    }
+                });
+            });
+        }
+    </script>    <!-- LogRocket Test -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.LogRocket) {
+                /* Log initialization success */
+                console.log('LogRocket initialized');
+                LogRocket.track('test_event', {
+                    timestamp: new Date().toISOString(),
+                    page: 'index'
+                });
+            } else {
+                /* Log initialization error */
+                console.error('LogRocket not initialized');
+            }
         });
     </script>
 </body>

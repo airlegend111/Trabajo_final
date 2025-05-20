@@ -16,3 +16,16 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Usuario")
+    content = models.TextField(verbose_name="Contenido")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creación")
+    
+    class Meta:
+        verbose_name = "Comentario"
+        verbose_name_plural = "Comentarios"
+        ordering = ['-created_at']  # Ordenar por fecha de creación, más recientes primero
+    
+    def __str__(self):
+        return f'Comentario de {self.user.username} - {self.created_at.strftime("%d/%m/%Y %H:%M")}'
