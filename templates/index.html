@@ -52,9 +52,8 @@
                 <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
                         <a class="nav-link" href="#inicio">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#menu">Menú</a>
+                    </li>                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'menu' %}">Menú</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#nosotros">Nosotros</a>
@@ -76,10 +75,9 @@
     <!-- Hero Section -->
     <section class="hero-section" style="background-image: url('https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&q=80')">
         <div class="overlay"></div>
-        <div class="hero-content">
-            <h1>Bigotes Pizzería Artesanal Alemana</h1>
+        <div class="hero-content">            <h1>Bigotes Pizzería Artesanal Alemana</h1>
             <p>Descubre el auténtico sabor de la pizza artesanal con un toque alemán</p>
-            <a href="#menu" class="btn btn-lg btn-warning">Ver Menú</a>
+            <a href="{% url 'menu' %}" class="btn btn-lg btn-warning">Ver Menú</a>
         </div>
     </section>
 

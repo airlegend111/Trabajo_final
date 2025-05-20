@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="menu-container bg-white shadow-sm">    <!-- Barra de búsqueda y filtros -->
+    <div class="search-filter-container">
+        <form method="get" class="search-form">            <div class="search-container">
+                <input type="text" name="search" value="{{ search_query }}" placeholder="Buscar pizzas">
+                <button type="submit" class="search-button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            
+            <div class="filters"><select name="size" class="filter-select">
+                    <option value="">Tamaño</option>
+                    {% for size in sizes %}
+                    <option value="{{ size }}" {% if size_filter == size %}selected{% endif %}>{{ size }}</option>
+                    {% endfor %}
+                </select>
+                  <select name="sort" class="filter-select">
+                    <option value="name" {% if sort_by == 'name' %}selected{% endif %}>Orden alfabético</option>
+                    <option value="price_asc" {% if sort_by == 'price_asc' %}selected{% endif %}>Precio menor a mayor</option>
+                    <option value="price_desc" {% if sort_by == 'price_desc' %}selected{% endif %}>Precio mayor a menor</option>
+                </select>
+            </div>
+        </form>
+    </div>
+
+    <!-- Galería de pizzas -->
+    <div class="pizza-grid">
+        {% for pizza in page_obj %}
+    <div class="pizza-card">
+            {% if pizza.image %}
+            <img src="{{ pizza.image.url }}" alt="{{ pizza.name }}" class="pizza-image">
+            {% else %}
+            <img src="/static/images/pizza-placeholder.jpg" alt="{{ pizza.name }}" class="pizza-image">
+            {% endif %}
+            <h3>{{ pizza.name }}</h3>
+            <p class="pizza-description">{{ pizza.description }}</p>
+            <p class="pizza-price">{{ pizza.size }} ${{ pizza.price }}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Paginación -->
+    {% if page_obj.has_other_pages %}
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+        <a href="?page=1{% if search_query %}&search={{ search_query }}{% endif %}{% if size_filter %}&size={{ size_filter }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" class="pagination-link">&laquo; Primera</a>
+        <a href="?page={{ page_obj.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if size_filter %}&size={{ size_filter }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" class="pagination-link">Anterior</a>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+            <span class="pagination-link active">{{ num }}</span>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+            <a href="?page={{ num }}{% if search_query %}&search={{ search_query }}{% endif %}{% if size_filter %}&size={{ size_filter }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" class="pagination-link">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if size_filter %}&size={{ size_filter }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" class="pagination-link">Siguiente</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}{% if search_query %}&search={{ search_query }}{% endif %}{% if size_filter %}&size={{ size_filter }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" class="pagination-link">Última &raquo;</a>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
