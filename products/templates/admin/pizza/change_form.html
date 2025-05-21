@@ -1,0 +1,52 @@
+{% extends "admin/change_form.html" %}
+{% load static %}
+
+{% block extrahead %}
+{{ block.super }}
+<style>
+    .preview-container {
+        margin: 1rem 0;
+        text-align: center;
+    }
+    
+    .preview-image {
+        max-width: 200px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .field-box {
+        background-color: #f8f9fa;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-radius: 4px;
+    }
+    
+    .submit-row {
+        background-color: #fff;
+        padding: 1rem;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+</style>
+{% endblock %}
+
+{% block field_sets %}
+<div class="preview-container">
+    {% if original.image %}
+    <img src="{{ original.image }}" alt="{{ original.name }}" class="preview-image">
+    {% endif %}
+</div>
+{{ block.super }}
+{% endblock %}
+
+{% block submit_buttons_bottom %}
+<div class="submit-row">
+    <input type="submit" value="Guardar" class="default" name="_save">
+    {% if original %}
+    <p class="deletelink-box">
+        <a href="{% url 'admin:products_pizza_delete' original.pk %}" class="deletelink">Eliminar</a>
+    </p>
+    {% endif %}
+</div>
+{% endblock %}

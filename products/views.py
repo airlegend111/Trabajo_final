@@ -7,8 +7,10 @@ import json
 import time
 import datetime
 from .models import Pizza, Cart, CartItem
+from users.decorators import customer_required
 
 @login_required
+@customer_required
 def add_to_cart(request):
     if request.method == 'POST':
         try:
@@ -70,6 +72,7 @@ def add_to_cart(request):
     return JsonResponse({'status': 'error', 'message': 'Método no permitido'}, status=405)
 
 @login_required
+@customer_required
 def view_cart(request):
     try:
         # Intentar obtener el carrito del usuario
@@ -96,6 +99,7 @@ def view_cart(request):
     return render(request, 'products/cart.html', context)
 
 @login_required
+@customer_required
 def update_cart_item(request, item_id):
     if request.method == 'POST':
         try:
@@ -143,6 +147,7 @@ def update_cart_item(request, item_id):
     return JsonResponse({'status': 'error', 'message': 'Método no permitido'}, status=405)
 
 @login_required
+@customer_required
 def remove_from_cart(request, item_id):
     if request.method == 'POST':
         try:
@@ -216,6 +221,7 @@ def menu_view(request):
     return render(request, 'menu.html', context)
 
 @login_required
+@customer_required
 def checkout(request):
     try:
         # Verificar que el usuario tenga un carrito con items
@@ -269,6 +275,7 @@ def checkout(request):
         return redirect('cart')
 
 @login_required
+@customer_required
 def order_confirmation(request):
     # Recuperar información de la orden desde la sesión
     order_info = request.session.get('order_info', {})

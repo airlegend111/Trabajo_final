@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 class Product(models.Model):
     """
@@ -29,6 +30,30 @@ class Pizza(models.Model):
     size = models.CharField(max_length=50, verbose_name="Tamaño")
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Precio")
     image = models.URLField(max_length=500, blank=True, null=True, verbose_name="URL de la Imagen")
+    
+    # Campos de auditoría
+    created_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name='pizzas_created',
+        verbose_name="Creado por"
+    )
+    modified_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name='pizzas_modified',
+        verbose_name="Modificado por"
+    )
+    created_at = models.DateTimeField(
+        verbose_name="Fecha de creación",
+        default=timezone.now
+    )
+    modified_at = models.DateTimeField(
+        verbose_name="Última modificación",
+        default=timezone.now
+    )
 
     class Meta:
         verbose_name = "Pizza"
@@ -37,6 +62,12 @@ class Pizza(models.Model):
         
     def __str__(self):
         return f"{self.name} - {self.size}"
+
+    def save(self, *args, **kwargs):
+        if not self.pk:  # Si es una nueva pizza
+            self.created_at = timezone.now()
+        self.modified_at = timezone.now()
+        super().save(*args, **kwargs)
 
 class Cart(models.Model):
     """

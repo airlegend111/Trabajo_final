@@ -1,0 +1,39 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block content %}
+<div class="module">
+    <h2>Panel de Administración Restringido</h2>
+    <div class="description">
+        <p>Bienvenido al panel de administración restringido. Aquí puedes:</p>
+        <ul>
+            <li>Gestionar el catálogo de pizzas (agregar, editar, eliminar)</li>
+            <li>Moderar comentarios de usuarios</li>
+        </ul>
+        <p>No tienes acceso a:</p>
+        <ul>
+            <li>Carrito de compras</li>
+            <li>Proceso de checkout</li>
+            <li>Gestión de pedidos</li>
+        </ul>
+    </div>
+</div>
+
+<div class="module">
+    <h2>Accesos Rápidos</h2>
+    <table>
+        <tr>
+            <th>
+                <a href="{% url 'admin:products_pizza_changelist' %}" class="addlink">
+                    Gestionar Pizzas
+                </a>
+            </th>
+            <th>
+                <a href="{% url 'admin:users_comment_changelist' %}" class="changelink">
+                    Moderar Comentarios
+                </a>
+            </th>
+        </tr>
+    </table>
+</div>
+{% endblock %}
