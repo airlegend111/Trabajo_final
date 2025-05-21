@@ -1,5 +1,5 @@
-INSERT INTO pizzas (name, description, size, price, image) VALUES
-('Pizza Greta', 'Salsa de tomate natural, mozzarella y albahaca fresca', 'Pequeña', 12.5, 'https://i.postimg.cc/TYV61KHc/pexels-ahmad-nawawi-285301-2714722.jpg'),
+INSERT INTO products_pizza (name, description, size, price, image) VALUES
+('Pizza Greta', 'Salsa de tomate natural, mozzarella y albahaca fresca', 'Pequeña', 12.5, 'https://i.postimg.cc/T2sCVJhc/pexels-enginakyurt-1437810.webp'),
 ('Pizza Ludewico', 'Pepperoni ahumado alemán, queso gouda y cebolla caramelizada', 'Grande', 14.75, 'https://i.postimg.cc/N0zhSm5Q/pexels-asya-vlasova-228168-3229356.jpg'),
 ('Pizza Bigote', 'Especialidad de la casa con salchicha bratwurst y mostaza artesanal', 'Grande', 15.2, 'https://i.postimg.cc/qRPPMrsY/pexels-athena-2180875.jpg'),
 ('Pizza Schwarzwald', 'Jamón de la Selva Negra, champiñones y queso emmental', 'Grande', 13.9, 'https://i.postimg.cc/Mpz8QzCJ/pexels-bananamade-2762942.jpg'),

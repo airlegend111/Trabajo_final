@@ -51,15 +51,11 @@
             <div class="collapse navbar-collapse" id="navbarNav">                
                 <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link" href="#inicio">Inicio</a>
-                    </li>                    <li class="nav-item">
+                        <a class="nav-link" href="#inicio">Inicio</a>                    </li>                    <li class="nav-item">
                         <a class="nav-link" href="{% url 'menu' %}">Menú</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#nosotros">Nosotros</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contacto">Contacto</a>
                     </li>
                     <li class="nav-item ms-3">
                         {% if user.is_authenticated %}
@@ -136,9 +132,7 @@
                 <div><img src="https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?auto=format&fit=crop&q=80" alt="Galería 3"></div>
             </div>
         </div>
-    </section>
-
-    <!-- Video Section -->
+    </section>    <!-- Video Section -->
     <section class="section">
         <div class="container">
             <h2 class="section-title">Descubre el Arte de Nuestra Pizza</h2>
@@ -151,56 +145,19 @@
                 </iframe>
             </div>
         </div>
-    </section>    
+    </section>
+    
     <!-- Contact Section -->
     <section id="contacto" class="section bg-dark text-white">
         <div class="container">
-            <h2 class="section-title text-white">Contacto</h2>
+         
             <div class="row">
-                <div class="col-md-6 mb-4">
-                    <h3 class="mb-4">Información</h3>
-                    <p>
-                        <strong>Dirección:</strong><br>
-                        Calle Principal #123<br>
-                        Ciudad, País
-                    </p>
-                    <p>
-                        <strong>Teléfono:</strong><br>
-                        (123) 456-7890
-                    </p>
-                    <p>
-                        <strong>Email:</strong><br>
-                        info@bigotespizzeria.com
-                    </p>
-                    <p>
-                        <strong>Horario:</strong><br>
-                        Lunes a Domingo<br>
-                        12:00 PM - 10:00 PM
-                    </p>
+                <div class="col-md-12 mb-4">
+                    
                 </div>
-                <div class="col-md-6 mb-4">
-                    <h3 class="mb-4">Envíanos un mensaje</h3>                      <form method="post" action="#contacto" id="contactForm">
-                        {% csrf_token %}
-                        <div class="mb-3">
-                            <label for="nombre" class="form-label text-white">Nombre</label>
-                            <input type="text" id="nombre" name="nombre" class="form-control bg-dark text-white" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label text-white">Email</label>
-                            <input type="email" id="email" name="email" class="form-control bg-dark text-white" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="asunto" class="form-label text-white">Asunto</label>
-                            <input type="text" id="asunto" name="asunto" class="form-control bg-dark text-white" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="mensaje" class="form-label text-white">Mensaje</label>
-                            <textarea id="mensaje" name="mensaje" class="form-control bg-dark text-white" rows="4" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-warning w-100">Enviar</button>
-                    </form>
-                </div>
-            </div>              <!-- Comentarios Section -->
+            </div>
+            
+            <!-- Comentarios Section -->
             <div class="mt-5">
                 <h3 class="text-center mb-4">Comentarios</h3>
                 <div class="comments-section">
@@ -226,7 +183,7 @@
                 </div>
             </div>
 
-              <!-- Map -->
+            <!-- Map -->
             <div class="mt-5">
                 <h3 class="text-center mb-4">Nuestra ubicación</h3>
                 <div class="map-container">
@@ -253,12 +210,10 @@
                     <p>Auténtica pizza artesanal con un toque alemán</p>
                 </div>
                 <div class="col-md-4">
-                    <h5>Enlaces Rápidos</h5>
-                    <ul class="list-unstyled">
+                    <h5>Enlaces Rápidos</h5>                    <ul class="list-unstyled">
                         <li><a href="#inicio" class="text-white">Inicio</a></li>
                         <li><a href="#menu" class="text-white">Menú</a></li>
                         <li><a href="#nosotros" class="text-white">Nosotros</a></li>
-                        <li><a href="#contacto" class="text-white">Contacto</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4">
