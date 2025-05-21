@@ -12,6 +12,8 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name="Usuario")
     full_name = models.CharField(max_length=255, blank=True, verbose_name="Nombre completo")
     bio = models.TextField(blank=True, verbose_name="Biografía")
+    cedula = models.CharField(max_length=10, blank=True, null=True, verbose_name="Cédula")
+    fecha_nacimiento = models.DateField(blank=True, null=True, verbose_name="Fecha de nacimiento")
     profile_picture = models.ImageField(upload_to='profiles/', blank=True, null=True, verbose_name="Foto de perfil")
     role = models.CharField(
         max_length=10,

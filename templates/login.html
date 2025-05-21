@@ -65,9 +65,8 @@
                             <div class="mb-4">
                                 <label for="password" class="form-label">Contraseña</label>
                                 <input type="password" class="form-control" id="password" name="password" required>
-                            </div><button type="submit" class="btn btn-warning w-100 mb-3">Iniciar Sesión</button>
-                            <div class="text-center">
-                                <p class="text-white">¿No tienes una cuenta? <a href="/register" class="text-warning">Regístrate</a></p>
+                            </div><button type="submit" class="btn btn-warning w-100 mb-3">Iniciar Sesión</button>                            <div class="text-center">
+                                <p class="text-white">¿No tienes una cuenta? <a href="{% url 'register' %}" class="text-warning">Regístrate</a></p>
                             </div>
                         </form>
                     </div>

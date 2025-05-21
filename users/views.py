@@ -10,18 +10,48 @@ import json
 
 def register_view(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+        nombre = request.POST.get('nombre')
+        apodo = request.POST.get('apodo')  # Este será nuestro username
         email = request.POST.get('email')
+        cedula = request.POST.get('cedula')
+        fecha_nacimiento = request.POST.get('fecha_nacimiento')
+        password = request.POST.get('password')
+        confirm_password = request.POST.get('confirm_password')
         
-        if User.objects.filter(username=username).exists():
-            messages.error(request, 'El nombre de usuario ya existe')
+        # Validaciones
+        if User.objects.filter(username=apodo).exists():
+            messages.error(request, 'Este apodo ya está en uso. Por favor elige otro.')
             return redirect('register')
             
-        user = User.objects.create_user(username=username, password=password, email=email)
-        UserProfile.objects.create(user=user)
+        if User.objects.filter(email=email).exists():
+            messages.error(request, 'Este correo electrónico ya está registrado.')
+            return redirect('register')
         
+        if password != confirm_password:
+            messages.error(request, 'Las contraseñas no coinciden.')
+            return redirect('register')
+            
+        # Validar cédula (10 dígitos)
+        if len(cedula) != 10 or not cedula.isdigit():
+            messages.error(request, 'La cédula debe contener 10 dígitos numéricos.')
+            return redirect('register')
+            
+        # Crear usuario
+        user = User.objects.create_user(username=apodo, email=email, password=password)
+        user.first_name = nombre  # Guardamos el nombre completo en first_name
+        user.save()
+        
+        # Crear perfil de usuario con los campos adicionales
+        profile = UserProfile.objects.create(
+            user=user,
+            full_name=nombre,
+            cedula=cedula,
+            fecha_nacimiento=fecha_nacimiento
+        )
+        
+        # Iniciar sesión automáticamente
         login(request, user)
+        messages.success(request, '¡Bienvenido/a! Tu cuenta ha sido creada exitosamente.')
         return redirect('/')
         
     return render(request, 'register.html')
@@ -31,7 +61,17 @@ def login_view(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         
+        # Intentar autenticar primero con el nombre de usuario
         user = authenticate(username=username, password=password)
+        
+        # Si no funciona, intentar autenticar con el email
+        if user is None:
+            try:
+                user_obj = User.objects.get(email=username)
+                user = authenticate(username=user_obj.username, password=password)
+            except User.DoesNotExist:
+                user = None
+        
         if user is not None:
             login(request, user)
             return redirect('/')
