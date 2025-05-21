@@ -1,0 +1,87 @@
+{
+    "application": {
+        "baseUrl": "http://localhost:8000",
+        "adminUrl": "http://localhost:8000/admin",
+        "endpoints": {
+            "login": "/login/",
+            "admin": "/admin/",
+            "menu": "/menu/",
+            "pizzaList": "/admin/products/pizza/",
+            "addPizza": "/admin/products/pizza/add/",
+            "editPizza": "/admin/products/pizza/{id}/change/",
+            "deletePizza": "/admin/products/pizza/{id}/delete/"
+        }
+    },
+    "selectors": {
+        "login": {
+            "username": "#id_username",
+            "password": "#id_password",
+            "submitButton": "button[type='submit']"
+        },
+        "pizzaForm": {
+            "name": "#id_name",
+            "description": "#id_description",
+            "size": "#id_size",
+            "price": "#id_price",
+            "image": "#id_image",
+            "saveButton": "input[name='_save']",
+            "deleteButton": ".deletelink"
+        },
+        "menu": {
+            "searchForm": "#pizza-search-form",
+            "searchInput": "#pizza-search",
+            "sizeFilter": "#pizza-size-filter",
+            "sortFilter": "#pizza-sort-filter",
+            "pizzaList": "#pizza-list",
+            "pizzaCard": ".pizza-card"
+        },
+        "admin": {
+            "resultList": "#result_list",
+            "addButton": ".addlink",
+            "searchBar": "#searchbar",
+            "actionSelect": "select[name='action']",
+            "goButton": "button[name='index']"
+        },
+        "cart": {
+            "container": "#cart-container",
+            "table": "#cart-table",
+            "total": "#cart-total"
+        }
+    },
+    "credentials": {
+        "admin": {
+            "username": "ggavi",
+            "password": "REPLACE_WITH_ACTUAL_PASSWORD"
+        }
+    },
+    "settings": {
+        "timeoutSeconds": 30,
+        "retryAttempts": 3,
+        "screenshotOnError": true,
+        "logLevel": "Info"
+    },
+    "testData": {
+        "samplePizza": {            "name": "Pizza de Prueba",
+            "description": "Pizza creada por automatización",
+            "size": "Mediana",
+            "price": "15.99",
+            "image": "https://example.com/pizza.jpg"
+        },
+        "bulkData": {
+            "csvPath": "data/pizzas.csv",
+            "imageFolder": "data/images/"
+        }
+    },
+    "validations": {
+        "required": ["name", "price", "size"],
+        "sizeOptions": ["Pequeña", "Mediana", "Grande", "Familiar"],
+        "priceRange": {
+            "min": 5.00,
+            "max": 50.00
+        }
+    },
+            "price": "15.99",
+            "image": "https://example.com/pizza.jpg"
+        }
+    }
+}

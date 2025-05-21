@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="confirmation-container text-center py-5">
+<div class="confirmation-container text-center py-5" id="confirmation-container">
     <div class="card mx-auto" style="max-width: 600px;">
         <div class="card-body">
             <div class="mb-4">
@@ -16,13 +16,13 @@
             <h1 class="mb-4">¡Pedido Confirmado!</h1>
             
             <p class="lead">Tu pedido ha sido recibido y está siendo procesado.</p>
-            <p>Hemos enviado un correo electrónico de confirmación a <strong>{{ request.user.email }}</strong> con los detalles del pedido.</p>
+            <p>Hemos enviado un correo electrónico de confirmación a <strong id="confirmation-email">{{ request.user.email }}</strong> con los detalles del pedido.</p>
             
             <div class="order-details mt-4 mb-4">
                 <h4>Detalles del Pedido</h4>
-                <p><strong>Número de Pedido:</strong> #{{ order_number }}</p>
-                <p><strong>Fecha:</strong> {{ order_date }}</p>
-                <p><strong>Total:</strong> ${{ order_total }}</p>
+                <p><strong>Número de Pedido:</strong> <span id="confirmation-number">#{{ order_number }}</span></p>
+                <p><strong>Fecha:</strong> <span id="confirmation-date">{{ order_date }}</span></p>
+                <p><strong>Total:</strong> <span id="confirmation-total">${{ order_total }}</span></p>
             </div>
             
             <hr>
@@ -31,7 +31,7 @@
             <p>Si tienes alguna pregunta o necesitas hacer cambios en tu pedido, por favor contáctanos lo antes posible.</p>
             
             <div class="mt-4">
-                <a href="{% url 'menu' %}" class="btn btn-primary">Volver al Menú</a>
+                <a href="{% url 'menu' %}" class="btn btn-primary" id="back-to-menu">Volver al Menú</a>
             </div>
         </div>
     </div>

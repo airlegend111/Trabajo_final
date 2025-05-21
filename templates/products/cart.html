@@ -7,21 +7,21 @@
 
 {% block content %}
 {% csrf_token %}
-<div class="cart-container">
+<div class="cart-container" id="cart-container">
     <div class="row">
         <div class="col-md-12">
             <h1>Mi Carrito</h1>
             
             {% if error_message %}
-            <div class="alert alert-danger" role="alert">
+            <div class="alert alert-danger" role="alert" id="cart-error">
                 {{ error_message }}
             </div>
             {% endif %}
             
             {% if cart and items %}
-                <div class="cart-items-container">
+                <div class="cart-items-container" id="cart-items">
                     <div class="table-responsive">
-                        <table class="table table-hover">
+                        <table class="table table-hover" id="cart-table">
                             <thead>
                                 <tr>
                                     <th scope="col">Imagen</th>
@@ -34,31 +34,31 @@
                             </thead>
                             <tbody>
                                 {% for item in items %}
-                                <tr data-id="{{ item.id }}">
+                                <tr data-id="{{ item.id }}" id="cart-item-{{ item.id }}">
                                     <td>
                                         {% if item.pizza.image %}
-                                        <img src="{{ item.pizza.image }}" alt="{{ item.pizza.name }}" class="cart-item-image" width="80">
+                                        <img src="{{ item.pizza.image }}" alt="{{ item.pizza.name }}" class="cart-item-image" width="80" id="cart-img-{{ item.id }}">
                                         {% else %}
-                                        <img src="/static/images/pizza-placeholder.jpg" alt="{{ item.pizza.name }}" class="cart-item-image" width="80">
+                                        <img src="/static/images/pizza-placeholder.jpg" alt="{{ item.pizza.name }}" class="cart-item-image" width="80" id="cart-img-{{ item.id }}">
                                         {% endif %}
                                     </td>
                                     <td>
-                                        <h5>{{ item.pizza.name }}</h5>
-                                        <p class="text-muted">{{ item.pizza.size }}</p>
+                                        <h5 id="cart-name-{{ item.id }}">{{ item.pizza.name }}</h5>
+                                        <p class="text-muted" id="cart-size-{{ item.id }}">{{ item.pizza.size }}</p>
                                     </td>
-                                    <td>${{ item.pizza.price }}</td>
+                                    <td id="cart-price-{{ item.id }}">${{ item.pizza.price }}</td>
                                     <td>
                                         <div class="quantity-selector">
                                             <div class="input-group">
-                                                <button class="btn btn-outline-secondary decrease-quantity" type="button" data-id="{{ item.id }}">-</button>
-                                                <input type="number" class="form-control text-center item-quantity" value="{{ item.quantity }}" min="1" max="10" data-id="{{ item.id }}">
-                                                <button class="btn btn-outline-secondary increase-quantity" type="button" data-id="{{ item.id }}">+</button>
+                                                <button class="btn btn-outline-secondary decrease-quantity" type="button" data-id="{{ item.id }}" id="decrease-{{ item.id }}">-</button>
+                                                <input type="number" class="form-control text-center item-quantity" value="{{ item.quantity }}" min="1" max="10" data-id="{{ item.id }}" id="quantity-{{ item.id }}">
+                                                <button class="btn btn-outline-secondary increase-quantity" type="button" data-id="{{ item.id }}" id="increase-{{ item.id }}">+</button>
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="item-subtotal">${{ item.total_price }}</td>
+                                    <td class="item-subtotal" id="subtotal-{{ item.id }}">${{ item.total_price }}</td>
                                     <td>
-                                        <button class="btn btn-danger remove-item" data-id="{{ item.id }}">
+                                        <button class="btn btn-danger remove-item" data-id="{{ item.id }}" id="remove-{{ item.id }}">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </td>
@@ -73,21 +73,22 @@
                                 </tr>
                             </tfoot>
                         </table>
-                    </div>                    <div class="cart-actions mt-4 d-flex justify-content-between">
-                        <a href="{% url 'menu' %}" class="btn btn-outline-secondary">
+                    </div>
+                    <div class="cart-actions mt-4 d-flex justify-content-between">
+                        <a href="{% url 'menu' %}" class="btn btn-outline-secondary" id="continue-shopping">
                             <i class="fas fa-arrow-left"></i> Continuar Comprando
                         </a>
-                        <a href="{% url 'checkout' %}" class="btn btn-success">
+                        <a href="{% url 'checkout' %}" class="btn btn-success" id="proceed-checkout">
                             Proceder al Pago <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
                 </div>
             {% else %}
-                <div class="empty-cart text-center py-5">
+                <div class="empty-cart text-center py-5" id="empty-cart">
                     <i class="fas fa-shopping-cart fa-4x text-muted mb-3"></i>
                     <h3>Tu carrito está vacío</h3>
                     <p class="text-muted">Parece que aún no has añadido ningún producto a tu carrito.</p>
-                    <a href="{% url 'menu' %}" class="btn btn-warning">
+                    <a href="{% url 'menu' %}" class="btn btn-warning" id="go-to-menu">
                         <i class="fas fa-pizza-slice me-2"></i> Ir al Menú
                     </a>
                 </div>
