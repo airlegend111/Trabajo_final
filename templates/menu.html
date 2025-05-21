@@ -1,9 +1,15 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+{% endblock %}
 
 {% block content %}
+{% csrf_token %}
 <div class="menu-container bg-white shadow-sm">    <!-- Barra de búsqueda y filtros -->
     <div class="search-filter-container">
-        <form method="get" class="search-form">            <div class="search-container">
+        <form method="get" class="search-form">   <div class="search-container">
                 <input type="text" name="search" value="{{ search_query }}" placeholder="Buscar pizzas">
                 <button type="submit" class="search-button">
                     <i class="fas fa-search"></i>
@@ -23,12 +29,10 @@
                 </select>
             </div>
         </form>
-    </div>
-
-    <!-- Galería de pizzas -->
+    </div>    <!-- Galería de pizzas -->
     <div class="pizza-grid">
         {% for pizza in page_obj %}
-    <div class="pizza-card">            {% if pizza.image %}
+    <div class="pizza-card" data-id="{{ pizza.id }}" data-name="{{ pizza.name }}" data-price="{{ pizza.price }}" data-size="{{ pizza.size }}" data-description="{{ pizza.description }}" data-image="{{ pizza.image|default:'/static/images/pizza-placeholder.jpg' }}">            {% if pizza.image %}
             <img src="{{ pizza.image }}" alt="{{ pizza.name }}" class="pizza-image">
             {% else %}
             <img src="/static/images/pizza-placeholder.jpg" alt="{{ pizza.name }}" class="pizza-image">
@@ -36,6 +40,9 @@
             <h3>{{ pizza.name }}</h3>
             <p class="pizza-description">{{ pizza.description }}</p>
             <p class="pizza-price">{{ pizza.size }} ${{ pizza.price }}</p>
+            {% if user.is_authenticated %}
+            <button class="btn btn-sm btn-warning add-to-cart-btn">Agregar al carrito</button>
+            {% endif %}
         </div>
         {% endfor %}
     </div>
@@ -60,7 +67,162 @@
         <a href="?page={{ page_obj.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if size_filter %}&size={{ size_filter }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" class="pagination-link">Siguiente</a>
         <a href="?page={{ page_obj.paginator.num_pages }}{% if search_query %}&search={{ search_query }}{% endif %}{% if size_filter %}&size={{ size_filter }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" class="pagination-link">Última &raquo;</a>
         {% endif %}
-    </div>
-    {% endif %}
+    </div>    {% endif %}
 </div>
+
+<!-- Modal para añadir pizza al carrito -->
+{% if user.is_authenticated %}
+<div class="modal fade" id="addToCartModal" tabindex="-1" aria-labelledby="addToCartModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addToCartModalLabel">Añadir al Carrito</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="" alt="Pizza" id="modal-pizza-image" class="img-fluid rounded">
+                    </div>
+                    <div class="col-md-8">
+                        <h3 id="modal-pizza-name"></h3>
+                        <p id="modal-pizza-description" class="text-muted"></p>
+                        <p>Tamaño: <span id="modal-pizza-size"></span></p>
+                        <p>Precio: $<span id="modal-pizza-price"></span></p>
+                        <div class="quantity-selector mb-3">
+                            <label for="pizza-quantity">Cantidad:</label>
+                            <div class="input-group">
+                                <button class="btn btn-outline-secondary" type="button" id="decrease-quantity">-</button>
+                                <input type="number" id="pizza-quantity" class="form-control text-center" value="1" min="1" max="10">
+                                <button class="btn btn-outline-secondary" type="button" id="increase-quantity">+</button>
+                            </div>
+                        </div>
+                        <p>Subtotal: $<span id="modal-subtotal"></span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-warning" id="confirm-add-to-cart">Añadir al Carrito</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Toast de confirmación -->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <div id="cartToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header bg-success text-white">
+            <strong class="me-auto">Carrito</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            ¡Pizza añadida al carrito!
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const addToCartModal = new bootstrap.Modal(document.getElementById('addToCartModal'));
+    const cartToast = new bootstrap.Toast(document.getElementById('cartToast'));
+    let selectedPizzaId = null;
+
+    // Agregar manejadores de eventos a las tarjetas de pizza
+    document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const pizzaCard = this.closest('.pizza-card');
+            selectedPizzaId = pizzaCard.dataset.id;
+            
+            // Actualizar el modal con los datos de la pizza
+            document.getElementById('modal-pizza-name').textContent = pizzaCard.dataset.name;
+            document.getElementById('modal-pizza-description').textContent = pizzaCard.dataset.description;
+            document.getElementById('modal-pizza-size').textContent = pizzaCard.dataset.size;
+            document.getElementById('modal-pizza-price').textContent = pizzaCard.dataset.price;
+            document.getElementById('modal-pizza-image').src = pizzaCard.dataset.image;
+            
+            // Restablecer la cantidad a 1
+            document.getElementById('pizza-quantity').value = 1;
+            
+            // Actualizar el subtotal
+            updateSubtotal();
+            
+            // Mostrar el modal
+            addToCartModal.show();
+        });
+    });
+
+    // Actualizar subtotal cuando cambia la cantidad
+    function updateSubtotal() {
+        const quantity = parseInt(document.getElementById('pizza-quantity').value);
+        const price = parseFloat(document.getElementById('modal-pizza-price').textContent);
+        const subtotal = (quantity * price).toFixed(2);
+        document.getElementById('modal-subtotal').textContent = subtotal;
+    }
+
+    // Manejadores para los botones de aumentar/disminuir cantidad
+    document.getElementById('increase-quantity').addEventListener('click', function() {
+        const quantityInput = document.getElementById('pizza-quantity');
+        const currentValue = parseInt(quantityInput.value);
+        if (currentValue < 10) {
+            quantityInput.value = currentValue + 1;
+            updateSubtotal();
+        }
+    });
+
+    document.getElementById('decrease-quantity').addEventListener('click', function() {
+        const quantityInput = document.getElementById('pizza-quantity');
+        const currentValue = parseInt(quantityInput.value);
+        if (currentValue > 1) {
+            quantityInput.value = currentValue - 1;
+            updateSubtotal();
+        }
+    });
+
+    // Actualizar subtotal cuando se cambia manualmente la cantidad
+    document.getElementById('pizza-quantity').addEventListener('change', updateSubtotal);
+
+    // Manejar la confirmación de añadir al carrito
+    document.getElementById('confirm-add-to-cart').addEventListener('click', function() {
+        const quantity = parseInt(document.getElementById('pizza-quantity').value);
+        
+        // Enviar solicitud al servidor
+        fetch('/products/cart/add/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            },
+            body: JSON.stringify({
+                pizza_id: selectedPizzaId,
+                quantity: quantity
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                // Cerrar el modal
+                addToCartModal.hide();
+                
+                // Mostrar el toast de confirmación
+                cartToast.show();
+                
+                // Actualizar el contador del carrito si existe
+                if (document.getElementById('cart-count')) {
+                    document.getElementById('cart-count').textContent = data.cart_count;
+                }
+            } else {
+                console.error('Error:', data.message);
+                alert('Error al añadir al carrito: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error al añadir al carrito');
+        });
+    });
+});
+</script>
+{% endif %}
 {% endblock %}

@@ -1,0 +1,65 @@
+/* Cart Styles */
+.cart-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.cart-item-image {
+    max-width: 80px;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.quantity-selector .form-control {
+    max-width: 60px;
+    text-align: center;
+}
+
+.empty-cart {
+    padding: 3rem;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+}
+
+.empty-cart i {
+    color: #dee2e6;
+}
+
+/* Pizza Modal Styles */
+#modal-pizza-image {
+    max-height: 200px;
+    object-fit: cover;
+}
+
+/* Cart Badge */
+.nav-link .badge {
+    font-size: 0.6rem;
+}
+
+.pizza-card {
+    position: relative;
+    transition: transform 0.3s;
+    cursor: pointer;
+}
+
+.pizza-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Button at bottom of card */
+.pizza-card .add-to-cart-btn {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.pizza-card:hover .add-to-cart-btn {
+    opacity: 1;
+}

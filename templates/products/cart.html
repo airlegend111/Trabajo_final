@@ -1,0 +1,224 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/cart.css' %}">
+{% endblock %}
+
+{% block content %}
+{% csrf_token %}
+<div class="cart-container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Mi Carrito</h1>
+            
+            {% if error_message %}
+            <div class="alert alert-danger" role="alert">
+                {{ error_message }}
+            </div>
+            {% endif %}
+            
+            {% if cart and items %}
+                <div class="cart-items-container">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Imagen</th>
+                                    <th scope="col">Pizza</th>
+                                    <th scope="col">Precio</th>
+                                    <th scope="col">Cantidad</th>
+                                    <th scope="col">Subtotal</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in items %}
+                                <tr data-id="{{ item.id }}">
+                                    <td>
+                                        {% if item.pizza.image %}
+                                        <img src="{{ item.pizza.image }}" alt="{{ item.pizza.name }}" class="cart-item-image" width="80">
+                                        {% else %}
+                                        <img src="/static/images/pizza-placeholder.jpg" alt="{{ item.pizza.name }}" class="cart-item-image" width="80">
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <h5>{{ item.pizza.name }}</h5>
+                                        <p class="text-muted">{{ item.pizza.size }}</p>
+                                    </td>
+                                    <td>${{ item.pizza.price }}</td>
+                                    <td>
+                                        <div class="quantity-selector">
+                                            <div class="input-group">
+                                                <button class="btn btn-outline-secondary decrease-quantity" type="button" data-id="{{ item.id }}">-</button>
+                                                <input type="number" class="form-control text-center item-quantity" value="{{ item.quantity }}" min="1" max="10" data-id="{{ item.id }}">
+                                                <button class="btn btn-outline-secondary increase-quantity" type="button" data-id="{{ item.id }}">+</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="item-subtotal">${{ item.total_price }}</td>
+                                    <td>
+                                        <button class="btn btn-danger remove-item" data-id="{{ item.id }}">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="4" class="text-end fw-bold">Total:</td>
+                                    <td id="cart-total" class="fw-bold">${{ cart.total_price }}</td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>                    <div class="cart-actions mt-4 d-flex justify-content-between">
+                        <a href="{% url 'menu' %}" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left"></i> Continuar Comprando
+                        </a>
+                        <a href="{% url 'checkout' %}" class="btn btn-success">
+                            Proceder al Pago <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            {% else %}
+                <div class="empty-cart text-center py-5">
+                    <i class="fas fa-shopping-cart fa-4x text-muted mb-3"></i>
+                    <h3>Tu carrito está vacío</h3>
+                    <p class="text-muted">Parece que aún no has añadido ningún producto a tu carrito.</p>
+                    <a href="{% url 'menu' %}" class="btn btn-warning">
+                        <i class="fas fa-pizza-slice me-2"></i> Ir al Menú
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Manejadores para los botones de aumentar/disminuir cantidad
+    document.querySelectorAll('.increase-quantity').forEach(button => {
+        button.addEventListener('click', function() {
+            const id = this.dataset.id;
+            const input = document.querySelector(`.item-quantity[data-id="${id}"]`);
+            const currentValue = parseInt(input.value);
+            if (currentValue < 10) {
+                input.value = currentValue + 1;
+                updateCartItem(id, currentValue + 1);
+            }
+        });
+    });
+
+    document.querySelectorAll('.decrease-quantity').forEach(button => {
+        button.addEventListener('click', function() {
+            const id = this.dataset.id;
+            const input = document.querySelector(`.item-quantity[data-id="${id}"]`);
+            const currentValue = parseInt(input.value);
+            if (currentValue > 1) {
+                input.value = currentValue - 1;
+                updateCartItem(id, currentValue - 1);
+            }
+        });
+    });
+
+    // Actualizar cuando se cambia manualmente la cantidad
+    document.querySelectorAll('.item-quantity').forEach(input => {
+        input.addEventListener('change', function() {
+            const id = this.dataset.id;
+            const value = parseInt(this.value);
+            if (value >= 1 && value <= 10) {
+                updateCartItem(id, value);
+            } else if (value < 1) {
+                this.value = 1;
+                updateCartItem(id, 1);
+            } else {
+                this.value = 10;
+                updateCartItem(id, 10);
+            }
+        });
+    });
+
+    // Eliminar elemento del carrito
+    document.querySelectorAll('.remove-item').forEach(button => {
+        button.addEventListener('click', function() {
+            const id = this.dataset.id;
+            if (confirm('¿Estás seguro de que deseas eliminar este producto del carrito?')) {
+                removeFromCart(id);
+            }
+        });
+    });
+
+    function updateCartItem(id, quantity) {
+        fetch(`/products/cart/update/${id}/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            },
+            body: JSON.stringify({ quantity: quantity })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                // Actualizar el subtotal del elemento
+                document.querySelector(`tr[data-id="${id}"] .item-subtotal`).textContent = `$${data.item_total.toFixed(2)}`;
+                
+                // Actualizar el total del carrito
+                document.getElementById('cart-total').textContent = `$${data.cart_total.toFixed(2)}`;
+                
+                // Actualizar el contador del carrito si existe
+                if (document.getElementById('cart-count')) {
+                    document.getElementById('cart-count').textContent = data.cart_count;
+                }
+            } else {
+                console.error('Error:', data.message);
+                alert('Error al actualizar el carrito: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error al actualizar el carrito');
+        });
+    }
+
+    function removeFromCart(id) {
+        fetch(`/products/cart/remove/${id}/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                // Eliminar la fila de la tabla
+                document.querySelector(`tr[data-id="${id}"]`).remove();
+                
+                // Actualizar el total del carrito
+                document.getElementById('cart-total').textContent = `$${data.cart_total.toFixed(2)}`;
+                
+                // Actualizar el contador del carrito si existe
+                if (document.getElementById('cart-count')) {
+                    document.getElementById('cart-count').textContent = data.cart_count;
+                }
+                
+                // Si no quedan elementos, recargar la página para mostrar carrito vacío
+                if (data.cart_count === 0) {
+                    location.reload();
+                }
+            } else {
+                console.error('Error:', data.message);
+                alert('Error al eliminar del carrito: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error al eliminar del carrito');
+        });
+    }
+});
+</script>
+{% endblock %}
