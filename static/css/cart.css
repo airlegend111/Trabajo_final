@@ -63,3 +63,78 @@
 .pizza-card:hover .add-to-cart-btn {
     opacity: 1;
 }
+
+/* Checkout Form Styles */
+.checkout-container {
+    color: #333;
+    background-color: #f8f9fa;
+    padding: 2rem;
+    border-radius: 10px;
+}
+
+.checkout-form-container .form-label {
+    color: #495057;
+    font-weight: 500;
+}
+
+.checkout-form-container .form-control {
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    color: #212529;
+}
+
+.checkout-form-container .form-control:focus {
+    background-color: #fff;
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.card {
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.card-header h5 {
+    color: #495057;
+    font-weight: 600;
+}
+
+.order-summary {
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.order-summary .list-group-item {
+    background-color: transparent;
+    color: #212529;
+}
+
+.form-check-label {
+    color: #495057;
+}
+
+.text-muted {
+    color: #6c757d !important;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+    color: #fff;
+}
+
+.btn-outline-secondary {
+    color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-outline-secondary:hover {
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
