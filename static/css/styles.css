@@ -327,9 +327,10 @@ footer hr {
 
 /* Estilos del menú de pizzas */
 .menu-container {
+    padding: 2rem;
+    border-radius: 10px;
+    margin: 2rem auto;
     max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
 }
 
 .search-filter-container {
@@ -411,41 +412,52 @@ input[type="text"]:focus, .filter-select:focus {
     border-color: #ffc107;
 }
 
+/* Pizza Grid Styles */
 .pizza-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
 }
 
 .pizza-card {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    margin-bottom: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.pizza-card:hover {
+    transform: translateY(-5px);
 }
 
 .pizza-image {
     width: 100%;
-    height: 150px;
+    height: 200px;
     object-fit: cover;
+    display: block;
 }
 
 .pizza-card h3 {
+    padding: 1rem;
     margin: 0;
-    font-size: 18px;
-    color: #000;
+    color: #333;
+    font-size: 1.2rem;
 }
 
 .pizza-description {
-    margin: 0;
-    font-size: 14px;
+    padding: 0 1rem;
     color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
 }
 
 .pizza-price {
+    padding: 0 1rem 1rem;
+    color: #ff4b4b;
+    font-weight: bold;
     margin: 0;
-    font-size: 14px;
-    color: #000;
 }
 
 /* Pagination */
@@ -458,14 +470,21 @@ input[type="text"]:focus, .filter-select:focus {
 
 .pagination-link {
     padding: 5px 10px;
-    border: 1px solid #000;
-    color: #000;
+    border: 1px solid #ff0000;
+    color: #ff0000;
     text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.pagination-link:hover {
+    background-color: #ff0000;
+    color: #fff;
 }
 
 .pagination-link.active {
-    background-color: #000;
+    background-color: #ff0000;
     color: #fff;
+    border-color: #ff0000;
 }
 
 /* Footer */

@@ -61,11 +61,32 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#contacto">Contacto</a>
                     </li>
-                    <li class="nav-item ms-3">                        
+                    <li class="nav-item ms-3">
+                        {% if user.is_authenticated %}
+                        <div class="dropdown">
+                            <button class="btn btn-warning dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user me-2"></i>
+                                {{ user.username }}
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                                {% if user.userprofile.is_admin %}                                <li><a class="dropdown-item" href="{% url 'admin:index' %}">Panel Admin</a></li>
+                                {% endif %}
+                                <li><a class="dropdown-item" href="#">Mi Perfil</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="dropdown-item">Cerrar Sesión</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                        {% else %}
                         <a class="btn btn-outline-warning d-flex align-items-center" href="{% url 'login' %}">
                             <i class="fas fa-user me-2"></i>
                             Iniciar Sesión
                         </a>
+                        {% endif %}
                     </li>
                 </ul>
             </div>
@@ -158,8 +179,8 @@
                     </p>
                 </div>
                 <div class="col-md-6 mb-4">
-                    <h3 class="mb-4">Envíanos un mensaje</h3>                    
-                    <form>
+                    <h3 class="mb-4">Envíanos un mensaje</h3>                      <form method="post" action="#contacto" id="contactForm">
+                        {% csrf_token %}
                         <div class="mb-3">
                             <label for="nombre" class="form-label text-white">Nombre</label>
                             <input type="text" id="nombre" name="nombre" class="form-control bg-dark text-white" required>

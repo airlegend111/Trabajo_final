@@ -27,7 +27,7 @@ class Pizza(models.Model):
     description = models.TextField(verbose_name="Descripción")
     size = models.CharField(max_length=50, verbose_name="Tamaño")
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Precio")
-    image = models.ImageField(upload_to='pizzas/', blank=True, null=True, verbose_name="Imagen")
+    image = models.URLField(max_length=500, blank=True, null=True, verbose_name="URL de la Imagen")
 
     class Meta:
         verbose_name = "Pizza"

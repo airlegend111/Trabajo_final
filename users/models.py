@@ -1,6 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+class UserRole(models.TextChoices):
+    CLIENT = 'CLIENT', 'Cliente'
+    ADMIN = 'ADMIN', 'Administrador'
+
 class UserProfile(models.Model):
     """
     Model representing a user's profile.
@@ -9,6 +13,12 @@ class UserProfile(models.Model):
     full_name = models.CharField(max_length=255, blank=True, verbose_name="Nombre completo")
     bio = models.TextField(blank=True, verbose_name="Biografía")
     profile_picture = models.ImageField(upload_to='profiles/', blank=True, null=True, verbose_name="Foto de perfil")
+    role = models.CharField(
+        max_length=10,
+        choices=UserRole.choices,
+        default=UserRole.CLIENT,
+        verbose_name="Rol"
+    )
 
     class Meta:
         verbose_name = "Perfil de usuario"
@@ -16,6 +26,10 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+    @property
+    def is_admin(self):
+        return self.role == UserRole.ADMIN
 
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Usuario")

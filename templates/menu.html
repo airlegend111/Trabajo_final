@@ -28,9 +28,8 @@
     <!-- Galería de pizzas -->
     <div class="pizza-grid">
         {% for pizza in page_obj %}
-    <div class="pizza-card">
-            {% if pizza.image %}
-            <img src="{{ pizza.image.url }}" alt="{{ pizza.name }}" class="pizza-image">
+    <div class="pizza-card">            {% if pizza.image %}
+            <img src="{{ pizza.image }}" alt="{{ pizza.name }}" class="pizza-image">
             {% else %}
             <img src="/static/images/pizza-placeholder.jpg" alt="{{ pizza.name }}" class="pizza-image">
             {% endif %}
